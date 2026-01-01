@@ -1,0 +1,35 @@
+body {
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+}
+
+.game-container {
+    text-align: center;
+}
+
+#word-display {
+    margin: 20px 0;
+    font-size: 2em;
+    letter-spacing: 5px;
+}
+
+#letter-buttons {
+    margin: 20px 0;
+}
+
+#letter-buttons button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+#reset-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+}
