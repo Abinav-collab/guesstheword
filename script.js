@@ -5,12 +5,14 @@ const maxAttempts = 5;
 
 const gridContainer = document.getElementById('grid-container');
 const messageContainer = document.getElementById('message-container');
+const newWordButton = document.getElementById('new-word-button'); // Get the new button
 
 function initializeGame() {
     secretWord = words[Math.floor(Math.random() * words.length)];
     currentAttempt = 0;
     gridContainer.innerHTML = '';
     messageContainer.textContent = '';
+    currentGuess = ''; // Reset current guess
 
     for (let i = 0; i < maxAttempts * 5; i++) {
         const cell = document.createElement('div');
@@ -18,6 +20,8 @@ function initializeGame() {
         gridContainer.appendChild(cell);
     }
 
+    // Ensure only one listener is active
+    document.removeEventListener('keydown', handleKeyPress);
     document.addEventListener('keydown', handleKeyPress);
 }
 
@@ -45,6 +49,8 @@ function updateGrid() {
 
     for (let i = 0; i < 5; i++) {
         cells[baseIndex + i].textContent = currentGuess[i] || '';
+        // Clear previous highlighting when backspacing
+        cells[baseIndex + i].classList.remove('correct', 'present', 'absent');
     }
 }
 
@@ -78,5 +84,8 @@ function checkGuess() {
         document.removeEventListener('keydown', handleKeyPress);
     }
 }
+
+// Add event listener for the new word button
+newWordButton.addEventListener('click', initializeGame);
 
 initializeGame();
