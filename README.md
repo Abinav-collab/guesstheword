@@ -12,3 +12,4 @@ A simple, grid-based "Guess the Word" game built with HTML, CSS, and JavaScript.
     - **Red:** Incorrect letter.
 4. You have 5 attempts to guess the word.
 5. If you fail, the game is over, and the correct word is revealed.
+6. Click the "New Word" button to start a new game with a different word.
