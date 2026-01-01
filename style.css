@@ -62,3 +62,19 @@ h1 {
     font-size: 1.2em;
     color: #a391b2;
 }
+
+#new-word-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    background-color: #c9e4de; /* Soft pastel blue-green */
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+#new-word-button:hover {
+    background-color: #a7d7c5; /* Slightly darker pastel green */
+}
