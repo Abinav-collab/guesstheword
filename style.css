@@ -1,35 +1,64 @@
 body {
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: #f0e6f2; /* Soft pastel purple */
 }
 
 .game-container {
     text-align: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#word-display {
+h1 {
+    color: #a391b2; /* Muted purple */
+}
+
+#grid-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
     margin: 20px 0;
-    font-size: 2em;
-    letter-spacing: 5px;
 }
 
-#letter-buttons {
+.grid-item {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #dcdcdc;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+}
+
+.correct {
+    background-color: #a7d7c5; /* Pastel green */
+    border-color: #a7d7c5;
+    color: white;
+}
+
+.present {
+    background-color: #f7d794; /* Pastel yellow */
+    border-color: #f7d794;
+    color: white;
+}
+
+.absent {
+    background-color: #f28b82; /* Pastel red */
+    border-color: #f28b82;
+    color: white;
+}
+
+#message-container {
     margin: 20px 0;
-}
-
-#letter-buttons button {
-    margin: 5px;
-    padding: 10px 15px;
     font-size: 1.2em;
-    cursor: pointer;
-}
-
-#reset-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    cursor: pointer;
+    color: #a391b2;
 }
