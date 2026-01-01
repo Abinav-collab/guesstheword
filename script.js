@@ -1,51 +1,82 @@
-const words = ["javascript", "html", "css", "react", "node"];
-let selectedWord = "";
-let guessedWord = [];
+const words = ["apple", "grape", "mango", "peach", "pears"];
+let secretWord = "";
+let currentAttempt = 0;
+const maxAttempts = 5;
 
-const wordDisplay = document.getElementById("word-display");
-const letterButtons = document.getElementById("letter-buttons");
-const resetButton = document.getElementById("reset-button");
+const gridContainer = document.getElementById('grid-container');
+const messageContainer = document.getElementById('message-container');
 
-function startGame() {
-    selectedWord = words[Math.floor(Math.random() * words.length)];
-    guessedWord = Array(selectedWord.length).fill("_");
-    updateWordDisplay();
-    createLetterButtons();
+function initializeGame() {
+    secretWord = words[Math.floor(Math.random() * words.length)];
+    currentAttempt = 0;
+    gridContainer.innerHTML = '';
+    messageContainer.textContent = '';
+
+    for (let i = 0; i < maxAttempts * 5; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('grid-item');
+        gridContainer.appendChild(cell);
+    }
+
+    document.addEventListener('keydown', handleKeyPress);
 }
 
-function updateWordDisplay() {
-    wordDisplay.textContent = guessedWord.join(" ");
-}
+let currentGuess = '';
 
-function createLetterButtons() {
-    letterButtons.innerHTML = "";
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    for (const letter of alphabet) {
-        const button = document.createElement("button");
-        button.textContent = letter;
-        button.addEventListener("click", () => handleGuess(letter));
-        letterButtons.appendChild(button);
+function handleKeyPress(event) {
+    if (currentAttempt >= maxAttempts) return;
+
+    const letter = event.key.toLowerCase();
+
+    if (letter.length === 1 && letter >= 'a' && letter <= 'z' && currentGuess.length < 5) {
+        currentGuess += letter;
+        updateGrid();
+    } else if (event.key === 'Backspace' && currentGuess.length > 0) {
+        currentGuess = currentGuess.slice(0, -1);
+        updateGrid();
+    } else if (event.key === 'Enter' && currentGuess.length === 5) {
+        checkGuess();
     }
 }
 
-function handleGuess(letter) {
-    let correctGuess = false;
-    for (let i = 0; i < selectedWord.length; i++) {
-        if (selectedWord[i] === letter) {
-            guessedWord[i] = letter;
-            correctGuess = true;
+function updateGrid() {
+    const cells = gridContainer.children;
+    const baseIndex = currentAttempt * 5;
+
+    for (let i = 0; i < 5; i++) {
+        cells[baseIndex + i].textContent = currentGuess[i] || '';
+    }
+}
+
+function checkGuess() {
+    const guess = currentGuess;
+    const cells = gridContainer.children;
+    const baseIndex = currentAttempt * 5;
+
+    for (let i = 0; i < 5; i++) {
+        const cell = cells[baseIndex + i];
+        if (guess[i] === secretWord[i]) {
+            cell.classList.add('correct');
+        } else if (secretWord.includes(guess[i])) {
+            cell.classList.add('present');
+        } else {
+            cell.classList.add('absent');
         }
     }
-    updateWordDisplay();
 
-    if (guessedWord.join("") === selectedWord) {
-        setTimeout(() => {
-            alert("You guessed the word!");
-            startGame();
-        }, 200);
+    if (guess === secretWord) {
+        messageContainer.textContent = 'You guessed the word!';
+        document.removeEventListener('keydown', handleKeyPress);
+        return;
+    }
+
+    currentAttempt++;
+    currentGuess = '';
+
+    if (currentAttempt >= maxAttempts) {
+        messageContainer.textContent = `Game Over! The word was "${secretWord}".`;
+        document.removeEventListener('keydown', handleKeyPress);
     }
 }
 
-resetButton.addEventListener("click", startGame);
-
-startGame();
+initializeGame();
